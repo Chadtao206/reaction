@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Lightning Reaction</title>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1 style="text-align: center;">CLICK THE BUTTON TO STOP THE TIME BEFORE 0! THE CLOSER YOU GET TO 0 THE BETTER!</h1>
+    </div>
+        <h3 class="mb-5" style="text-align: center;">TIME - <span id="time"></span></h3>
+        <h3 id="result" style="text-align: center;color:red"></h3>
+    <div style="justify-content: center; text-align: center;">
+        <button id="goBtn" type="button" class="btn btn-danger" style="width:300px;height:300px;border-radius:150px">START</button>
+    </div>
+</body>
+</html>
+<script>
+    let time = 200;
+    let timer;
+    let timeDiv = document.getElementById("time");
+    let btn = document.getElementById("goBtn");
+    let result = document.getElementById("result")
+
+    const count = () => {
+        time --;
+        if(time === 0) {
+            clearInterval(timer);
+            actions.lose()
+        }
+        timeDiv.innerText = time;
+    };
+
+    const actions = {
+        START(){
+            btn.innerText = "STOP"
+            timer = setInterval(count, 30)
+        }, 
+        STOP(){
+            clearInterval(timer);
+            btn.innerText = "RESET";
+            result.innerText = `YOUR SCORE - ${time}`;
+        },
+        RESET(){
+            time = 200;
+            timeDiv.innerText = time;
+            btn.innerText = "START"
+        },
+        lose(){
+            timeDiv.innerText = 0;
+            result.innerText = "YOU LOSE";
+            btn.innerText = "RESET"
+        }
+    }
+    btn.addEventListener("click", function(){
+        actions[this.innerText]()
+    })
+</script>
